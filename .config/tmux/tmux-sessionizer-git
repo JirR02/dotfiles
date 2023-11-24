@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+selected=$(find ~/Projects/Private/ ~/Projects/Public/ -mindepth 1 -maxdepth 1 -type d | fzf)
+
+selected_name=$(basename "$selected" | tr . _)
+
+tmux has-session -t=$selected_name 2> /dev/null
+
+if [[ $? -ne 0 ]]; then
+  TMUX='' tmux new-session -d -s "$selected_name" -c "$selected" 
+fi
+
+if [[ -z "$TMUX" ]]; then
+  tmux attach -t "$selected_name"
+else
+  tmux switch-client -t "$selected_name"
+fi
