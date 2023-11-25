@@ -14,7 +14,7 @@ Dotfiles are configuration files for various programs, and they help those progr
 
 ## How to manage your own Dotfiles?
 
-To manage my Dotfiles I use a git bare repository. If you are interested in my method go check out [https://www.youtube.com/watch?v=tBoLDpTWVOM&t=746s](DistroTube's video) on it.
+To manage my Dotfiles I use a git bare repository. If you are interested in my method go check out [DistroTube's video](https://www.youtube.com/watch?v=tBoLDpTWVOM&t=746s) on it.
 
 ## License
 
