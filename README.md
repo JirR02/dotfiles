@@ -1,6 +1,12 @@
 # JirR02 Dotfiles
 
+![Desktop](Desktop.png)
+
 ## Table of Contents
+
+1. [What are Dotfiles?](#what-are-dotfiles)
+1. [How to manage your own Dotfiles?](#how-to-manage-your-own-dotfiles)
+1. [License](#license)
 
 ## What are Dotfiles?
 
@@ -8,7 +14,7 @@ Dotfiles are configuration files for various programs, and they help those progr
 
 ## How to manage your own Dotfiles?
 
-To manage my Dotfiles I use a git bare repository. If you are interested in my method go check out DistroTube's video on it. ()
+To manage my Dotfiles I use a git bare repository. If you are interested in my method go check out [https://www.youtube.com/watch?v=tBoLDpTWVOM&t=746s](DistroTube's video) on it.
 
 ## License
 
