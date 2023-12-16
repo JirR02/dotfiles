@@ -19,7 +19,6 @@ return {
 				formatting.black,
 				formatting.clang_format,
 				formatting.prettier,
-				formatting.latexindent,
 				diagnostics.mypy.with({
 					extra_args = function()
 						local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX") or "/usr"

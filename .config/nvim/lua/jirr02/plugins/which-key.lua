@@ -9,7 +9,11 @@ return {
 		local wk = require("which-key")
 
 		wk.setup({
-			opts = {},
+			opts = {
+				defaults = {
+					["<leader>t"] = { name = "+vimtex" },
+				},
+			},
 		})
 		wk.register({
 			n = {

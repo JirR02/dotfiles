@@ -30,7 +30,6 @@ return {
 				"stylua",
 				"prettier",
 				"vale",
-				"latexindent",
 			},
 		})
 	end,
