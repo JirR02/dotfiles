@@ -142,9 +142,6 @@ alias gcm="git checkout master"
 
 alias config="/usr/bin/git --git-dir=/home/jirayu/Projects/Private/dotfiles --work-tree=/home/jirayu"
 
-alias Nvimconfig="/usr/bin/git --git-dir=/home/jirayu/Projects/Private/NeoVim_Setup/ --work-tree=/home/jirayu/.config/nvim"
-
-
 function gc () {
     git commit -m $1
 }
@@ -165,57 +162,9 @@ function gmb () {
     git branch -d $1
 }
 
-# Rclone shortcuts
-
-function mOneDrive {
-    rclone --vfs-cache-mode writes mount OneDrive: ~/OneDrive &>/dev/null &
-    disown
-}
-
-function mTheorie {
-    rclone --vfs-cache-mode writes mount Theorie_cNP: ~/Theorie_cNP &>/dev/null &
-    disown
-}
-
-function mEF {
-    rclone --vfs-cache-mode writes mount Theorie_EF: ~/Theorie_EF &>/dev/null &
-    disown
-}
-
-function mAB {
-    rclone --vfs-cache-mode writes mount Aufgabenbearbeitung: ~/Aufgabenbearbeitung &>/dev/null &
-    disown
-}
-
-function umOneDrive {
-   fusermount -uz ~/OneDrive &>/dev/null &
-   disown
-}
-
-function umTheorie {
-   fusermount -uz ~/Theorie_cNP &>/dev/null &
-   disown
-}
-
-function umEF {
-   fusermount -uz ~/Theorie_EF &>/dev/null &
-   disown
-}
-
-function umAB {
-   fusermount -uz ~/Aufgabenbearbeitung &>/dev/null &
-   disown
-}
-
 # Directory Shortcuts
 
 alias KSBG="cd ~/Nextcloud/Bildung/KSBG"
-
-alias Theorie="cd ~/Theorie_cNP"
-
-alias EF="cd ~/Theorie_EF"
-
-alias OneDrive="cd ~/OneDrive"
 
 alias TechLab="cd ~/Nextcloud/TechLab"
 
@@ -232,6 +181,7 @@ function Theoryen {
   cp ~/Nextcloud/Layouts/Theory_Notebook_English/macros.tex .
   cp ~/Nextcloud/Layouts/Theory_Notebook_English/preamble.tex .
   cp ~/Nextcloud/Layouts/Theory_Notebook_English/Theory.tex .
+  mv Theory.tex main.tex
 }
 
 function Theoryde {
@@ -241,40 +191,76 @@ function Theoryde {
   cp ~/Nextcloud/Layouts/Theory_Notebook_German/macros.tex .
   cp ~/Nextcloud/Layouts/Theory_Notebook_German/preamble.tex .
   cp ~/Nextcloud/Layouts/Theory_Notebook_German/Theory.tex .
+  mv Theory.tex main.tex
 }
 
 alias Facharbeit="cp ~/Nextcloud/Layouts/Facharbeit/Facharbeit.tex ."
 
 alias Layout="cp ~/Nextcloud/Layouts/Layout/layout.tex ."
 
-alias Poster="cp ~/Nextcloud/Layouts/Poster/Poster.tex ."
-
-alias Presentation="cp ~/Nextcloud/Layouts/Presentation/Presentation.tex ."
-
 function graph () {
   cp ~/Nextcloud/Layouts/Graph/template.py fig/$1.py
   echo "plt.savefig($1.pdf)" >> fig/$1.py
-  code fig/$1.py --wait
+  nvim fig/$1.py --wait
   rm fig/$1.py
 }
 
 function importpdf () {
-  i=1
-  l=$(qpdf --show-npages "$1")
-  while [ $i -le $l ]
-  do
-    echo "\\\begin{minipage}{0.5\\\textwidth}" >> $2
-    echo "  \\includegraphics[height=\\\textheight,page=$i]{$1}" >> $2
-    echo "\\\end{minipage}" >> $2
-    echo "\\\begin{minipage}{0.5\\\textwidth}" >> $2
-    echo "" >> $2
-    echo "\\\end{minipage}" >> $2
-    i=$(( $i + 1 ))
-  done
-} 
 
-function importfig () {
-  echo "\\\includegraphics[]{$1}" >> $2
+  # Define a function to sanitize filenames
+  sanitize_filename() {
+    echo $1 | tr -c '[:alnum:]' '_'
+  }
+
+  # Rename Word documents, PowerPoint presentations, and PDF files
+  for file in *.docx *.pptx *.pdf; do
+    if [[ -e $file ]]; then
+      new_name=$(sanitize_filename $file)
+        mv "$file" "$new_name"
+    fi
+  done
+
+  # Convert Word documents and PowerPoint presentations to PDF
+  for file in *.docx *.pptx; do
+    if [[ -e $file ]]; then
+      pdf_name="${file%.*}.pdf"
+      pandoc "$file" -o "$pdf_name"
+    fi
+  done
+
+  # Move PDF files to the specified folder
+  for pdf_file in *.pdf; do
+    if [[ -e $pdf_file ]]; then
+      mv "$pdf_file" pdf/
+    fi
+  done
+
+  # Import PDF files into LaTeX file (assuming LaTeX file is named main.tex)
+
+  for pdf_file in "$pdf_folder"/*.pdf; do
+    if [[ -e $pdf_file ]]; then
+      # Check if the PDF file is already imported in the LaTeX file
+      grep -q "$(basename "$pdf_file")" main.tex
+      if [ $? -ne 0 ]; then
+        # If not imported, add the import statement to LaTeX file
+        echo "\\includepdf[pages=-]{$pdf_file}" >> main.tex
+      fi
+    fi
+  done
+
+}
+
+function importimg {
+  for image_file in *.png *.jpg; do
+    if [[ -e $image_file ]]; then
+      # Check if the image file is already imported in the LaTeX file
+      grep -q "$(basename "$image_file")" main.tex
+      if [ $? -ne 0 ]; then
+        # If not imported, add the import statement to LaTeX file
+        echo "\\includegraphics[width=\\textwidth]{$(sanitize_filename "$image_file")}" >> main.tex
+      fi
+    fi
+  done
 }
 
 # Zathura
