@@ -2,6 +2,7 @@ return {
 	"nvimtools/none-ls.nvim",
 	dependencies = {
 		"jay-babu/mason-null-ls.nvim",
+		"nvimtools/none-ls-extras.nvim",
 	},
 	config = function()
 		local mason_null_ls = require("mason-null-ls")
@@ -25,7 +26,7 @@ return {
 						return { "--python-executable", virtual .. "/bin/python3" }
 					end,
 				}),
-				diagnostics.ruff,
+				-- diagnostics.ruff_lsp,
 				diagnostics.vale,
 			},
 			on_attach = function(current_client, bufnr)

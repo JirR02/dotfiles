@@ -1,0 +1,18 @@
+import = [
+  "~/.config/alacritty/themes/dracula.toml"
+]
+
+[env]
+TERM="xterm-256color"
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "MesloLGL Nerd Font"
+style = "Regular"
+
+[window]
+decorations = "Buttonless"
+opacity = 0.8
+blur = true

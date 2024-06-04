@@ -8,13 +8,6 @@ return {
 	config = function()
 		local wk = require("which-key")
 
-		wk.setup({
-			opts = {
-				defaults = {
-					["<leader>t"] = { name = "+vimtex" },
-				},
-			},
-		})
 		wk.register({
 			n = {
 				name = "vim",

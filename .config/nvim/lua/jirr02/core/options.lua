@@ -11,6 +11,14 @@ opt.autoindent = true
 opt.ignorecase = true
 opt.smartcase = true
 
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = true
+
+opt.hlsearch = false
+opt.incsearch = true
+
+opt.scrolloff = 999
+
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"

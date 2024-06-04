@@ -7,6 +7,10 @@ return {
 	config = function()
 		local noice = require("noice")
 
-		noice.setup()
+		noice.setup({
+			presets = {
+				long_message_to_split = true,
+			},
+		})
 	end,
 }
