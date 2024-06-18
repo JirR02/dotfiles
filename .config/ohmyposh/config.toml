@@ -1,0 +1,74 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+inal_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground = 'p:white'
+    template = "{{ .UserName }} in "
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    background = 'transparent'
+    foreground = 'p:purple'
+    template = "{{ .Path }}"
+
+    [blocks.segments.properties]
+    style = 'full'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    background = 'transparent'
+    foreground = 'p:white'
+    template = "{{ .UpstreamIcon }} {{ .HEAD }}<p:green>{{ if .Working.Added }}  {{ .Working.String }}{{ end }}</><p:red>{{ if .Working.Deleted }} 󰗨 {{ .Working.String }}{{ end }}</><p:orange>{{ if .Working.Modified }}  {{ .Working.String }}{{end}}</><p:yellow>{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}</>"
+
+    [blocks.segments.properties]
+      branch_icon = ''
+      fetch_status = true
+      fetch_upstream_icon = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    background = 'transparent'
+    foreground_templates = [
+      "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:magenta{{end}}",
+    ]
+    template = ' '
+
+[transient_prompt]
+  background = 'transparent'
+  foreground_templates = [
+    "{{if gt .Code 0}}p:red{{end}}",
+    "{{if eq .Code 0}}p:magenta{{end}}",
+  ]
+  template = ' '
+
+[palette]
+purple = "#9580ff"
+magenta = "#ff80bf"
+white = "#eeeeee"
+red = "#ff5555"
+green = "#8aff80"
+orange = "#ffca80"
+yellow = "#f1fa8c"

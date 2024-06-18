@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -8,7 +5,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -98,10 +94,6 @@ export DBUS_SESSION_BUS_ADRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting)
-
-
 
 # on startup
 
@@ -267,8 +259,8 @@ function importimg {
   done
 }
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Initialize Oh My Posh
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
 
 # Setup fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
